@@ -1,0 +1,40 @@
+# Local development / single-host stack: Next.js web + PocketBase.
+# For production (TLS via Caddy, submodule-based deploy) see the
+# portfolio-deploy repository.
+
+services:
+  pocketbase:
+    build:
+      context: ./pocketbase
+    restart: unless-stopped
+    volumes:
+      - pb_data:/pb/pb_data
+    ports:
+      - "8090:8090"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8090/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      args:
+        # NEXT_PUBLIC_* are inlined at build time; point them at the public origin.
+        NEXT_PUBLIC_POCKETBASE_URL: ${NEXT_PUBLIC_POCKETBASE_URL:-http://localhost:8090}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+    restart: unless-stopped
+    environment:
+      # Server-side fetches use the internal Docker network hostname.
+      POCKETBASE_INTERNAL_URL: http://pocketbase:8090
+      NEXT_PUBLIC_POCKETBASE_URL: ${NEXT_PUBLIC_POCKETBASE_URL:-http://localhost:8090}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+    depends_on:
+      pocketbase:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+
+volumes:
+  pb_data:

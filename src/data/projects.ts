@@ -1,0 +1,65 @@
+import type { Project } from '@/lib/types';
+
+/**
+ * Real projects, used both as the seed for PocketBase and as a build-time
+ * fallback when the database is not yet reachable. Keep in sync with the
+ * `projects` collection seed migration.
+ */
+export const fallbackProjects: Project[] = [
+  {
+    id: 'mechanicbuddy',
+    title: 'MechanicBuddy',
+    slug: 'mechanicbuddy',
+    description:
+      'A self-hosted workshop management platform for vehicle service centers — work orders, client/vehicle profiles, inventory, invoicing and PDF generation. Layered .NET 9 API with NHibernate and a Next.js frontend, shipped as a Docker Compose stack.',
+    technologies: ['.NET 9', 'ASP.NET Core', 'NHibernate', 'PostgreSQL', 'Next.js', 'Docker'],
+    category: 'software',
+    repo_url: '',
+    demo_url: 'https://mechanicbuddy.app/',
+    cover: '',
+    featured: true,
+    sort: 1,
+  },
+  {
+    id: 'commissions',
+    title: 'Commissions.app',
+    slug: 'commissions-app',
+    description:
+      'An art-commission SaaS platform that lets creatives sell their services without heavy moderation. .NET 8 microservice API, a Next.js + Auth0 UI, and Kubernetes delivery via ArgoCD/Helm.',
+    technologies: ['.NET 8', 'Microservices', 'Next.js', 'Auth0', 'Kubernetes', 'ArgoCD'],
+    category: 'software',
+    repo_url: 'https://github.com/D4M13N-D3V/art_platform',
+    demo_url: '',
+    cover: '',
+    featured: true,
+    sort: 2,
+  },
+  {
+    id: 'meilisearch-net',
+    title: 'meilisearch.NET',
+    slug: 'meilisearch-net',
+    description:
+      'A NuGet package that embeds MeiliSearch directly into a C# application — managing the background process, health checks and API-key lifecycle so you can add full-text search without running a separate service.',
+    technologies: ['.NET 8', 'C#', 'MeiliSearch', 'NuGet', 'Ollama'],
+    category: 'oss',
+    repo_url: 'https://git.d4m13n.dev/damien/meilisearch.NET',
+    demo_url: '',
+    cover: '',
+    featured: true,
+    sort: 3,
+  },
+  {
+    id: 'classification-llm',
+    title: 'CPU-Optimized Classification LLM',
+    slug: 'classification-llm',
+    description:
+      'A custom, lightweight LLM fine-tuned for CPU execution that reached 92% top-3 accuracy for URL categorization at a fraction of the compute cost. Backed by an event-driven MLOps pipeline that version-controls datasets and opens deployment PRs automatically.',
+    technologies: ['LLM Fine-Tuning', 'MLOps', 'Python', 'Kubernetes', 'CI/CD'],
+    category: 'software',
+    repo_url: '',
+    demo_url: '',
+    cover: '',
+    featured: false,
+    sort: 4,
+  },
+];

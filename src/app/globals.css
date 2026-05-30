@@ -1,0 +1,65 @@
+:root {
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Syntax highlighting theme for code blocks (rehype-highlight / highlight.js).
+   A compact dark theme tuned to the cyan brand accent. */
+.hljs {
+  display: block;
+  overflow-x: auto;
+  background: #0d1117;
+  color: #e7edf3;
+}
+pre code.hljs {
+  padding: 1rem 1.25rem;
+}
+.hljs-comment,
+.hljs-quote {
+  color: #6b7785;
+  font-style: italic;
+}
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in {
+  color: #4fd1ff;
+}
+.hljs-string,
+.hljs-attr {
+  color: #7ee787;
+}
+.hljs-number,
+.hljs-literal {
+  color: #f0a36b;
+}
+.hljs-title,
+.hljs-section,
+.hljs-name {
+  color: #d2a8ff;
+}
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #79c0ff;
+}
+.hljs-tag,
+.hljs-deletion {
+  color: #ff7b72;
+}
+.hljs-addition {
+  color: #7ee787;
+}
+.hljs-emphasis {
+  font-style: italic;
+}
+.hljs-strong {
+  font-weight: 700;
+}
