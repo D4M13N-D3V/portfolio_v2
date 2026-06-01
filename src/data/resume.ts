@@ -65,7 +65,7 @@ export const experience: Job[] = [
   },
   {
     role: 'Software Engineer',
-    company: 'AuraSide',
+    company: 'Hone.gg',
     period: 'October 2021 – August 2022',
     highlights: [
       'Led development of a dual-component PC optimization system, integrating a C++/C# desktop app with a modern web interface.',

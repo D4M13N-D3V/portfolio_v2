@@ -5,9 +5,30 @@ import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LaunchIcon from '@mui/icons-material/Launch';
 import type { Project } from '@/lib/types';
+
+// Render a description, turning any inline http(s) URLs into clickable links.
+function renderDescription(text: string) {
+  const parts = text.split(/(https?:\/\/[^\s]+?)(?=[.,;:)]?(?:\s|$))/g);
+  return parts.map((part, i) =>
+    /^https?:\/\//.test(part) ? (
+      <Link
+        key={i}
+        href={part}
+        target="_blank"
+        rel="noopener noreferrer"
+        sx={{ wordBreak: 'break-word' }}
+      >
+        {part}
+      </Link>
+    ) : (
+      part
+    ),
+  );
+}
 
 export default function ProjectCard({ project }: { project: Project }) {
   return (
@@ -22,7 +43,7 @@ export default function ProjectCard({ project }: { project: Project }) {
           )}
         </Box>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          {project.description}
+          {renderDescription(project.description)}
         </Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75 }}>
           {project.technologies.map((t) => (
