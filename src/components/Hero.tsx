@@ -79,7 +79,6 @@ export default function Hero() {
           sx={{
             mt: 2,
             color: 'text.secondary',
-            fontFamily: 'var(--font-mono, monospace)',
             minHeight: '2.2rem',
           }}
         >

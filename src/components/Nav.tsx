@@ -38,7 +38,6 @@ export default function Nav() {
             component={Link}
             href="/"
             sx={{
-              fontFamily: 'var(--font-mono, monospace)',
               fontWeight: 700,
               fontSize: '1.15rem',
               color: 'text.primary',

@@ -19,13 +19,13 @@ export const profile = {
   handle: 'd4m13n',
   title: 'Senior Full Stack .NET Developer',
   location: 'Morrisville, NC',
-  email: 'damienostler1@outlook.com',
+  email: 'd4m13n.dev@pm.me',
   summary:
-    'Versatile, customer-focused Senior Software Engineer with deep experience modernizing legacy .NET systems, architecting microservices, and integrating AI/ML into production. I blend traditional .NET enterprise engineering with cloud-native MLOps, AI orchestration and multi-cluster infrastructure automation.',
+    'Versatile, customer-focused Senior Software Engineer with deep experience modernizing legacy .NET systems, architecting microservices, and integrating AI/ML into production. I blend traditional .NET enterprise engineering and DevOps with AI model fine-tuning and orchestration, and multi-cluster infrastructure automation.',
   socials: {
     github: 'https://github.com/D4M13N-D3V',
     gitea: 'https://git.d4m13n.dev',
-    linkedin: 'https://www.linkedin.com/in/damien-ostler',
+    linkedin: 'https://www.linkedin.com/in/damien-ostler-254663110/',
     website: 'https://d4m13n.dev',
   },
 };
