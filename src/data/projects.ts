@@ -225,9 +225,9 @@ export const fallbackProjects: Project[] = [
     technologies: ['JavaScript', 'Node.js', 'Docker', 'Web App'],
     category: 'software',
     repo_url: 'https://github.com/D4M13N-D3V/gunlocker',
-    demo_url: '',
+    demo_url: 'https://gunlocker.d4m13n.dev/',
     cover: '',
-    featured: false,
+    featured: true,
     sort: 14,
   },
   {
