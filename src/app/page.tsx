@@ -36,7 +36,7 @@ function SectionHeader({ title, href, cta }: { title: string; href: string; cta:
 
 export default async function HomePage() {
   const [projects, posts] = await Promise.all([getProjects(), getPosts()]);
-  const featured = projects.filter((p) => p.featured).slice(0, 3);
+  const featured = projects.filter((p) => p.featured).slice(0, 6);
   const latestPosts = posts.slice(0, 3);
 
   return (
