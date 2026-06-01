@@ -14,7 +14,7 @@ export const fallbackProjects: Project[] = [
       'A white-label workshop management SaaS for vehicle service centers — work orders, client/vehicle profiles, inventory, invoicing and PDF generation. Layered .NET 9 API with NHibernate and a Next.js frontend. The full platform automates tenant provisioning and configuration for each workshop; the live demo currently exposes a single provisioned application (the tenant-configuration automation isn’t available in the demo yet) and is deployed with Docker rather than Kubernetes. Try the demo at https://mechanicbuddydemo.d4m13n.dev/ with admin / demopassword!. Full documentation at https://docs.mechanicbuddy.app/.',
     technologies: ['.NET 9', 'ASP.NET Core', 'NHibernate', 'PostgreSQL', 'Next.js', 'Docker', 'Multi-tenant SaaS'],
     category: 'software',
-    repo_url: '',
+    repo_url: 'https://github.com/D4M13N-D3V/MechanicBuddy',
     demo_url: 'https://mechanicbuddydemo.d4m13n.dev/',
     cover: '',
     featured: true,
@@ -73,7 +73,7 @@ export const fallbackProjects: Project[] = [
     repo_url: 'https://git.d4m13n.dev/damien/meilisearch.NET',
     demo_url: '',
     cover: '',
-    featured: true,
+    featured: false,
     sort: 3,
   },
   {
