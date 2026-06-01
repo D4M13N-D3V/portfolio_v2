@@ -53,7 +53,7 @@ jobs:
       # NEXT_PUBLIC_* are inlined at build time, so the public origin is baked
       # into the published image. Override with an Actions variable SITE_ORIGIN.
       - name: Build image (load locally for scanning)
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           load: true
@@ -74,7 +74,7 @@ jobs:
           exit-code: '1' # fail the publish if a fixable HIGH/CRITICAL is found
 
       - name: Push image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: true
