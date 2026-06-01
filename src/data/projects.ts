@@ -147,6 +147,20 @@ export const fallbackProjects: Project[] = [
     sort: 8,
   },
   {
+    id: 'training-data-platform',
+    title: 'ML Training Data Platform',
+    slug: 'ml-training-data-platform',
+    description:
+      'Data443 — an internal platform for managing machine-learning training data and the full training lifecycle. Handled dataset ingestion, correction and manipulation, and orchestrated training execution, exposing a complete API so teams could build further automation on top of the training pipeline. Written in Python.',
+    technologies: ['Python', 'MLOps', 'REST API', 'Machine Learning', 'Data Pipelines'],
+    category: 'software',
+    repo_url: '',
+    demo_url: '',
+    cover: '',
+    featured: false,
+    sort: 17,
+  },
+  {
     id: 'portfolio-v2',
     title: 'd4m13n.dev — Portfolio & Blog',
     slug: 'portfolio-v2',
