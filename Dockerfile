@@ -27,6 +27,12 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs \
  && adduser --system --uid 1001 nextjs
 
+# The runtime only runs `node server.js`; npm/corepack aren't needed and their
+# bundled dependencies pull in CVEs (e.g. picomatch). Remove them to slim the
+# image and keep the security scan clean.
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack \
+    /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack
+
 # The standalone output bundles only what the server needs.
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
