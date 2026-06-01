@@ -2,7 +2,7 @@
 
 # Pinned PocketBase version so the migration API stays compatible with the
 # migrations in pb_migrations/. Bump deliberately, testing migrations first.
-FROM alpine:3.20 AS build
+FROM alpine:3.23 AS build
 ARG PB_VERSION=0.22.21
 # TARGETARCH is provided by BuildKit: "amd64" or "arm64".
 ARG TARGETARCH
@@ -12,7 +12,7 @@ RUN apk add --no-cache unzip ca-certificates wget \
  && unzip /tmp/pb.zip -d /pb \
  && rm /tmp/pb.zip
 
-FROM alpine:3.20
+FROM alpine:3.23
 RUN apk add --no-cache ca-certificates
 WORKDIR /pb
 COPY --from=build /pb/pocketbase /pb/pocketbase
