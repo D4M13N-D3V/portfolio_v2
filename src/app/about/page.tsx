@@ -6,6 +6,8 @@ import Grid from '@mui/material/Grid2';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
+import DownloadIcon from '@mui/icons-material/Download';
 import SocialIcons from '@/components/SocialIcons';
 import { profile, skillGroups, experience } from '@/data/resume';
 
@@ -25,7 +27,17 @@ export default function AboutPage() {
         <Typography color="text.secondary" sx={{ maxWidth: 760, fontSize: '1.1rem' }}>
           {profile.summary}
         </Typography>
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ mt: 3, display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 2 }}>
+          <Button
+            component="a"
+            href={profile.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="contained"
+            startIcon={<DownloadIcon />}
+          >
+            Download Résumé
+          </Button>
           <SocialIcons />
         </Box>
       </Box>

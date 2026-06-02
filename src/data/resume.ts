@@ -20,6 +20,10 @@ export const profile = {
   title: 'Senior Full Stack .NET Developer',
   location: 'Morrisville, NC',
   email: 'd4m13n.dev@pm.me',
+  // Public résumé (Google Doc). The /export?format=pdf form downloads a PDF
+  // directly instead of opening the Docs editor.
+  resumeUrl:
+    'https://docs.google.com/document/d/1WZigRyaAZVrHEEt5TYF38f--MapUCO7gywg9mamU-4U/export?format=pdf',
   summary:
     'Versatile, customer-focused Senior Software Engineer with deep experience modernizing legacy .NET systems, architecting microservices, and integrating AI/ML into production. I blend traditional .NET enterprise engineering and DevOps with AI model fine-tuning and orchestration, and multi-cluster infrastructure automation.',
   socials: {
