@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import DownloadIcon from '@mui/icons-material/Download';
 import SocialIcons from '@/components/SocialIcons';
 import { ACCENT } from '@/components/ThemeRegistry/theme';
 import { profile } from '@/data/resume';
@@ -98,6 +99,17 @@ export default function Hero() {
           </Button>
           <Button component={Link} href="/blog" variant="outlined" size="large">
             Read the Blog
+          </Button>
+          <Button
+            component="a"
+            href={profile.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="outlined"
+            size="large"
+            startIcon={<DownloadIcon />}
+          >
+            Résumé
           </Button>
           <SocialIcons />
         </Stack>
