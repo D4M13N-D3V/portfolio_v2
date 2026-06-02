@@ -1,6 +1,12 @@
-import type { Post } from '@/lib/types';
+/// <reference path="../pb_data/types.d.ts" />
 
-const aiEnvContent = `I don't use "an AI assistant." I use five or six of them, each picked for a different job — and the thing that makes that workable isn't any single model. It's a shared context layer underneath all of them. This is a tour of how the whole environment fits together: the agents I reach for, the MCP servers that give every one of them the same view of my work, the local model I run on a 32 GB Mac, and the review loop that keeps me in control.
+// Replace the original seeded blog post with the "Many Agents, One Context Layer"
+// writeup. We update the existing record (rather than mutating the DB out of band)
+// so a fresh boot and an already-seeded deploy converge on the same content. Keep
+// this in sync with src/data/posts.ts, which mirrors the seed for the cold-DB
+// fallback. The down migration restores the original AI-dev-environment post.
+
+const NEW_CONTENT = `I don't use "an AI assistant." I use five or six of them, each picked for a different job — and the thing that makes that workable isn't any single model. It's a shared context layer underneath all of them. This is a tour of how the whole environment fits together: the agents I reach for, the MCP servers that give every one of them the same view of my work, the local model I run on a 32 GB Mac, and the review loop that keeps me in control.
 
 ## The roster — right tool for the job
 
@@ -79,32 +85,94 @@ Three things turn this from a pile of novelties into actual leverage:
 
 That's the whole game: give every agent the same grounded view of my work, keep a person on the decisions, and let each tool do the part it's actually best at.`;
 
-/**
- * Build-time fallback posts. Mirrors the shape PocketBase returns (including the
- * `expand.tags` join) so pages render identically whether data comes from the DB
- * or this file. These are also used to seed PocketBase on first run.
- */
-export const fallbackPosts: Post[] = [
-  {
-    id: 'ai-engineering-environment',
-    slug: 'many-agents-one-context-layer',
-    title: 'Many Agents, One Context Layer: My AI Engineering Environment',
-    excerpt:
+const OLD_CONTENT = `Most of my day-to-day work now runs through an AI-assisted workflow. Here is how I have my environment wired up so the tooling actually accelerates real engineering instead of getting in the way.
+
+## The shape of the setup
+
+I treat AI tooling like any other part of my toolchain: it lives next to the editor, the terminal and the container runtime, and it has access to exactly the context it needs — no more.
+
+- **Editor + agent in the loop.** I keep an agentic coding assistant attached to the repo so it can read the actual source, run commands, and propose diffs I review before they land.
+- **Project memory.** A \`CLAUDE.md\` at the repo root documents the architecture, the commands, and the conventions. This is the single biggest quality lever.
+- **Everything containerized.** Postgres, the API and the frontend all come up with one \`docker compose up\`, so the agent (and I) can verify changes end-to-end.
+
+## CLAUDE.md is the contract
+
+When the commands and the architecture are written down, the assistant follows them instead of inventing its own.
+
+\`\`\`markdown
+# CLAUDE.md
+## Development Commands
+- \`docker compose up --build -d\` — start the full stack
+- \`npm run dev\` — frontend with hot reload
+## Architecture
+- Layered .NET API (Http.Api → Core.Application → Infrastructure)
+- Next.js App Router frontend talking to PocketBase
+\`\`\`
+
+## Guardrails that matter
+
+1. **Review every diff.** The agent proposes; I decide.
+2. **Let it run the verification.** Tests, type checks and a quick smoke test catch most regressions.
+3. **Keep secrets out.** Env files are git-ignored and mounted read-only.
+
+That combination — real repository access, written-down conventions, and one-command verification — turns the assistant into something that can carry a feature from idea to a reviewable, tested diff.`;
+
+migrate(
+  (db) => {
+    const dao = new Dao(db);
+    const post = dao.findFirstRecordByFilter(
+      'posts',
+      'slug = "how-i-set-up-my-ai-development-environment"',
+    );
+
+    post.set('title', 'Many Agents, One Context Layer: My AI Engineering Environment');
+    post.set('slug', 'many-agents-one-context-layer');
+    post.set(
+      'excerpt',
       'I run a handful of AI agents — cloud and local — each for a different job, all sharing one MCP context layer for GitHub, email, my IDE and the browser. Here is how the whole environment fits together, down to a local Qwen model on a 32 GB Mac.',
-    content: aiEnvContent,
-    cover: '',
-    published: true,
-    published_at: '2026-06-02T12:00:00.000Z',
-    reading_minutes: 7,
-    tags: ['tag-ai', 'tag-devtools', 'tag-selfhosting'],
-    expand: {
-      tags: [
-        { id: 'tag-ai', name: 'AI', slug: 'ai' },
-        { id: 'tag-devtools', name: 'Dev Tools', slug: 'dev-tools' },
-        { id: 'tag-selfhosting', name: 'Self-Hosting', slug: 'self-hosting' },
-      ],
-    },
-    created: '2026-06-02T12:00:00.000Z',
-    updated: '2026-06-02T12:00:00.000Z',
+    );
+    post.set('content', NEW_CONTENT);
+    post.set('published_at', '2026-06-02 12:00:00.000Z');
+    post.set('reading_minutes', 7);
+
+    // Add the Self-Hosting tag alongside the existing AI / Dev Tools tags.
+    try {
+      const selfHosting = dao.findFirstRecordByFilter('tags', 'slug = "self-hosting"');
+      const tags = post.get('tags') || [];
+      if (selfHosting && tags.indexOf(selfHosting.id) === -1) {
+        tags.push(selfHosting.id);
+        post.set('tags', tags);
+      }
+    } catch (_) {
+      /* tag is optional — skip if the seed tags aren't present */
+    }
+
+    dao.saveRecord(post);
   },
-];
+  (db) => {
+    const dao = new Dao(db);
+    const post = dao.findFirstRecordByFilter('posts', 'slug = "many-agents-one-context-layer"');
+
+    post.set('title', 'How I Set Up My Environment for AI-Assisted Development');
+    post.set('slug', 'how-i-set-up-my-ai-development-environment');
+    post.set(
+      'excerpt',
+      'My day-to-day now runs through an AI-assisted workflow. Here is how I wire up the editor, project memory and a containerized stack so the tooling accelerates real engineering.',
+    );
+    post.set('content', OLD_CONTENT);
+    post.set('published_at', '2026-05-20 12:00:00.000Z');
+    post.set('reading_minutes', 4);
+
+    try {
+      const selfHosting = dao.findFirstRecordByFilter('tags', 'slug = "self-hosting"');
+      if (selfHosting) {
+        const tags = (post.get('tags') || []).filter((id) => id !== selfHosting.id);
+        post.set('tags', tags);
+      }
+    } catch (_) {
+      /* ignore */
+    }
+
+    dao.saveRecord(post);
+  },
+);
